@@ -5,70 +5,28 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {TextInput,Text, View, StyleSheet, Button, ScrollView} from 'react-native';
 
 
 const App = () => {
-  const users = [
-    {
-      id:1,
-      name : "Ayush"
-    },
-    {
-      id:2,
-      name : "Govind"
-    },
-    {
-      id:3,
-      name : "Shivam"
-    },
-    {
-      id:4,
-      name : "Khusi"
-    },
-    {
-      id:5,
-      name : "Dev"
-    },
-    {
-      id:6,
-      name : "Dev"
-    },
-    {
-      id:7,
-      name : "Dev"
-    },
-    {
-      id:8,
-      name : "Dev"
-    },
-    {
-      id:9,
-      name : "Tank"
-    },
-    {
-      id:10,
-      name : "Tank"
-    },
-    {
-      id:11,
-      name : "Tank"
-    },
-    {
-      id:12,
-      name : "Birju",
-    },
+   const [count , setCount] = useState(0);
+   //useEffcet Lifecylce in Gen
+  //  useEffect(()=>{
+  //   console.warn('hello')
+  //  });
 
-  ]
+  useEffect(()=>{
+    console.warn('hello')
+   }, []); //useFffect only loading at the time of component mounting 
+
   return (
    <View>
-    <Text style ={{fontSize:31}}>Grid with Dyanmic Data</Text>
-    <View style= {{flex : 1 , flexDirection :'row' , flexWrap : 'wrap' }}>
-      {
-        users.map((item) => <Text style= {styles.textItem}>{item.name}</Text>)
-      }
-    </View>
+    <Text style ={{fontSize:24}}>Component LifeCycle useEffect {count}</Text>
+    <Button
+    title='Click'
+    onPress={() => setCount(count +1)}
+    />
    </View>
   ); 
 };
