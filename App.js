@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import {TextInput,Text, View, StyleSheet, Button, FlatList} from 'react-native';
+import {TextInput,Text, View, StyleSheet, Button, ScrollView} from 'react-native';
 
 
 const App = () => {
@@ -16,32 +16,66 @@ const App = () => {
       name : "Ayush"
     },
     {
-      id:1,
+      id:2,
       name : "Govind"
     },
     {
-      id:1,
+      id:3,
       name : "Shivam"
     },
     {
-      id:1,
+      id:4,
       name : "Khusi"
     },
     {
-      id:1,
+      id:5,
       name : "Dev"
     },
+    {
+      id:6,
+      name : "Dev"
+    },
+    {
+      id:7,
+      name : "Dev"
+    },
+    {
+      id:8,
+      name : "Dev"
+    },
+    {
+      id:9,
+      name : "Tank"
+    },
+    {
+      id:10,
+      name : "Tank"
+    },
+    {
+      id:11,
+      name : "Tank"
+    },
+    {
+      id:12,
+      name : "Birju",
+    },
+
   ]
   return (
-  <View>
+    <ScrollView style ={{marginBottom : 50}}>
+ 
    <Text style ={{fontSize:31}}>List of Friends </Text>
-   <FlatList
+ 
+   {/* <FlatList
    data={users}
     renderItem={({item})=><Text style={styles.textItem}>{item.name}</Text>}
     keyExtractor={item => item.id}
-   />
- 
-  </View>
+   /> */}
+   {
+    users.map((item) => <Text style = {styles.textItem}> {item.name}</Text>)
+   }
+  
+    </ScrollView>
   ); 
 };
 
