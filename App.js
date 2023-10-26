@@ -62,31 +62,30 @@ const App = () => {
 
   ]
   return (
-    <ScrollView style ={{marginBottom : 50}}>
- 
-   <Text style ={{fontSize:31}}>List of Friends </Text>
- 
-   {/* <FlatList
-   data={users}
-    renderItem={({item})=><Text style={styles.textItem}>{item.name}</Text>}
-    keyExtractor={item => item.id}
-   /> */}
-   {
-    users.map((item) => <Text style = {styles.textItem}> {item.name}</Text>)
-   }
-  
-    </ScrollView>
+   <View>
+    <Text style ={{fontSize:31}}>Grid with Dyanmic Data</Text>
+    <View style= {{flex : 1 , flexDirection :'row' , flexWrap : 'wrap' }}>
+      {
+        users.map((item) => <Text style= {styles.textItem}>{item.name}</Text>)
+      }
+    </View>
+   </View>
   ); 
 };
 
 const styles = StyleSheet.create(
   {
     textItem: {
-      margin :10 ,
-      fontSize : 24,
-      padding:10,
-      color: 'blue',
+      margin :5 ,
+      fontSize : 25,
+      backgroundColor: 'blue',
+      padding:5,
+      color: "#fff",
+      width :120,
+      height:120,
       borderWidth : 2,
+      textAlign :'center',
+      textAlignVertical :'center',
       borderColor : 'red',
     }
   }
