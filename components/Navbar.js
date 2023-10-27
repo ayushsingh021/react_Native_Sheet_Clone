@@ -1,24 +1,25 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet ,useWindowDimensions} from 'react-native';
 import { Button } from 'react-native-elements';
-// import { Button } from '@rneui/themed';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Navbar = ({ handleDownload }) => {
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
+
+const Navbar = ({ handleDownload ,clearData}) => {
+ 
   return (
-    <View style={styles.navbar}>
+    <View style={styles.navbar} >
+       <Button
+        title="Clear"
+        onPress={clearData}
+        iconRight={false} 
+        buttonStyle={styles.buttonStyle} 
+      />
       <Button
         title="Save"
         onPress={handleDownload}
-        icon={
-          <Icon
-            name="save"
-            size={15}
-            color="white"
-          />
-        }
-        iconRight={false} // Set to true if you want the icon on the right
-        buttonStyle={styles.buttonStyle} // Style for the button
+        iconRight={false} 
+        buttonStyle={styles.buttonStyle} 
       />
     </View>
   );
@@ -28,11 +29,22 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    justifyContent:'space-between',
     padding: 10,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#D2E3C8',
+    marginBottom :10,
+    elevation: 5, // Works for Android (API level 21+) only
+    // Shadow properties for iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
   },
   buttonStyle: {
-    backgroundColor: 'blue', // Change the button background color
+    backgroundColor: 'blue',
+    width : 140,
+    
+    // Change the button background color
   },
 });
 

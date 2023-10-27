@@ -12,12 +12,25 @@ import GridInputComponent from './components/Gridinput';
 import XLSX from 'xlsx';
 import RNFS from 'react-native-fs';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
-
+import Snackbar from './components/Snackbar';
 const App = () => {
   const [gridData, setGridData] = useState(Array(10).fill(Array(5).fill('')));
   useEffect(() => {
     handleLoadFromFile();
   }, []);
+
+  //******/// */
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+
+  const showMessage = () => {
+    setSnackbarVisible(true);
+  };
+
+  const dismissSnackbar = () => {
+    setSnackbarVisible(false);
+  };
+
+  // ****///
 
   //Cell Data changing 
   const handleCellChange = (value, row, col) => {
@@ -65,7 +78,13 @@ const App = () => {
     // Checking if the file exists before writing it
           RNFS.writeFile(filePath, excelFile, 'base64')
             .then(() => {
-              console.warn("Excel file saved on "+filePath);
+              //sanckbar
+              // console.warn("Excel file saved on "+filePath);
+              <Snackbar
+              message="This is a Snackbar message."
+               visible={snackbarVisible}
+              onDismiss={dismissSnackbar}
+              />
               console.log('Excel file saved successfully');
             })
             .catch((error) => {
@@ -114,16 +133,26 @@ const App = () => {
       });
   };
 
+  const clearData =()=>{
+    setGridData(Array(10).fill(Array(5).fill('')));
+  }
   return (
+    
     <View style={styles.container}>
     <View style={styles.navbar}>
-    <Navbar handleDownload = {handleDownload}/>
+    <Navbar handleDownload = {handleDownload} clearData={clearData}/>
     </View>
+    <ScrollView  vertical>
+    <ScrollView  horizontal>
     <GridInputComponent
       gridData={gridData}
       onCellChange={handleCellChange}
     />
+    </ScrollView>
+    </ScrollView>
+   
   </View>
+ 
   ); 
 };
 
@@ -135,8 +164,8 @@ const styles = StyleSheet.create(
       backgroundColor: 'blue',
       padding:5,
       color: "#fff",
-      width :120,
-      height:120,
+      width :50,
+      height:50,
       borderWidth : 2,
       textAlign :'center',
       textAlignVertical :'center',
@@ -146,6 +175,7 @@ const styles = StyleSheet.create(
     container: {
       flex: 1,
       padding: 10,
+      backgroundColor:'#A1C2F1',
     },
   }
 )
