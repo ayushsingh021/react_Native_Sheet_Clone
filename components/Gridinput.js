@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   cellStyle:{
-    backgroundColor: '#D0BFFF',
+    backgroundColor: '#FFF0CE',
     width: 60,
     height: 40,
     borderWidth: 1.5,

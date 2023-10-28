@@ -48,6 +48,7 @@ react {
     //
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
+     bundleAssetName = "MySheetClone_Assignment.android.bundle"
 }
 
 /**
@@ -107,6 +108,13 @@ android {
              signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.all {
+                outputFileName = "MySheetClone_Assignment.apk" // Change this line
+            }
         }
     }
 }

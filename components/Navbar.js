@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet ,useWindowDimensions} from 'react-native';
+import {Text, View, StyleSheet ,useWindowDimensions} from 'react-native';
 import { Button } from 'react-native-elements';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -9,6 +9,7 @@ const Navbar = ({ handleDownload ,clearData}) => {
  
   return (
     <View style={styles.navbar} >
+      <Text style={{fontSize:15, textAlign:'center', textAlignVertical:'center'}}>Assignment</Text>
        <Button
         title="Clear"
         onPress={clearData}
@@ -41,8 +42,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   buttonStyle: {
-    backgroundColor: 'blue',
-    width : 140,
+    backgroundColor: '#3A4D39',
+    width : 100,
+    borderRadius: 10,
     
     // Change the button background color
   },

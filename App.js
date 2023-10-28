@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
 import React, { useEffect, useState } from 'react';
 import {TextInput,Text, View, StyleSheet, Button, ScrollView} from 'react-native';
@@ -12,25 +6,44 @@ import GridInputComponent from './components/Gridinput';
 import XLSX from 'xlsx';
 import RNFS from 'react-native-fs';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
-import Snackbar from './components/Snackbar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const App = () => {
   const [gridData, setGridData] = useState(Array(10).fill(Array(5).fill('')));
+
+  const storeData = async () => {
+    try {
+      await AsyncStorage.setItem('Sheet1', JSON.stringify(gridData));
+      console.log('Data stored successfully.');
+    } catch (error) {
+      console.error('Error storing data: ', error);
+    }
+  };
+
+  // To retrieve data
+  const retrieveData = async () => {
+    try {
+      const data = await AsyncStorage.getItem('Sheet1');
+      if (data !== null) {
+        setGridData(JSON.parse(data));
+        console.log('Retrieved data:', data);
+      } else {
+        console.log('No data found for the specified key.');
+        setGridData(Array(10).fill(Array(5).fill('')));
+      }
+    } catch (error) {
+      console.error('Error retrieving data: ', error);
+    }
+  };
+
   useEffect(() => {
-    handleLoadFromFile();
+    retrieveData();
   }, []);
 
-  //******/// */
-  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  useEffect(() => {
+    storeData();
+  }, [gridData]);
 
-  const showMessage = () => {
-    setSnackbarVisible(true);
-  };
-
-  const dismissSnackbar = () => {
-    setSnackbarVisible(false);
-  };
-
-  // ****///
 
   //Cell Data changing 
   const handleCellChange = (value, row, col) => {
@@ -44,6 +57,7 @@ const App = () => {
   };
   //downlaading function
   const handleDownload = async () => {
+    console.log("hello");
     //storage premission cheak
     const permissionStatus = await check(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
   
@@ -63,6 +77,8 @@ const App = () => {
       }
     }
   };
+
+ 
   //excel file saving
   const saveExcelFile = () => {
     const wb = XLSX.utils.book_new();
@@ -73,18 +89,14 @@ const App = () => {
     const excelFile = XLSX.write(wb, { bookType: 'xlsx', type: 'base64' });
   
     // file save path to downloads folder
-    const filePath = `${RNFS.DownloadDirectoryPath}/google_sheets_clone.xlsx`;
+    const filePath = `${RNFS.DownloadDirectoryPath}/sheets_clone.xlsx`;
   
     // Checking if the file exists before writing it
           RNFS.writeFile(filePath, excelFile, 'base64')
             .then(() => {
               //sanckbar
-              // console.warn("Excel file saved on "+filePath);
-              <Snackbar
-              message="This is a Snackbar message."
-               visible={snackbarVisible}
-              onDismiss={dismissSnackbar}
-              />
+              alert("Excel file saved on "+filePath);
+              
               console.log('Excel file saved successfully');
             })
             .catch((error) => {
@@ -114,7 +126,7 @@ const App = () => {
   };
 
   const loadExcelFile = () => {
-    const filePath = `${RNFS.DownloadDirectoryPath}/google_sheets_clone.xlsx`;
+    const filePath = `${RNFS.DownloadDirectoryPath}/sheets_clone.xlsx`;
 
     RNFS.readFile(filePath, 'base64')
       .then((fileContent) => {
@@ -137,8 +149,9 @@ const App = () => {
     setGridData(Array(10).fill(Array(5).fill('')));
   }
   return (
-    
+   
     <View style={styles.container}>
+    {/* <HeaderNav handleDownload={handleDownload}  clearData = {clearData} /> */}
     <View style={styles.navbar}>
     <Navbar handleDownload = {handleDownload} clearData={clearData}/>
     </View>
@@ -152,9 +165,10 @@ const App = () => {
     </ScrollView>
    
   </View>
- 
+
   ); 
 };
+
 
 const styles = StyleSheet.create(
   {
@@ -175,7 +189,7 @@ const styles = StyleSheet.create(
     container: {
       flex: 1,
       padding: 10,
-      backgroundColor:'#A1C2F1',
+      backgroundColor:'#EBF3E8',
     },
   }
 )
